@@ -1,4 +1,4 @@
-// Referencias do HTML
+// Referências do HTML
 const menu = document.getElementById("menu")
 const cartBtn = document.getElementById("cart-btn")
 const cartModal = document.getElementById("cart-modal")
@@ -21,7 +21,7 @@ cartBtn.addEventListener("click", function() {
     // Ao clicar no cartBtn, o modal que antes estava oculto (Hidden) recebe a propriedade (Flex) e aparece na tela
     cartModal.style.display = "flex"
 
-    // Chama a funcao update, para que cada vez que o carrinho for aberto, ele atualize os pedidos
+    // Chama a função update, para que cada vez que o carrinho for aberto, ele atualize os pedidos
     updateCartModal();
 
 });
@@ -40,26 +40,26 @@ closeModalBtn.addEventListener("click", function(){
     cartModal.style.display = "none"
 });
 
-// Adicionar item no carinho
+// Adicionar item no carrinho
 menu.addEventListener("click", function(event){
 
-    // Faz com que o "click" tenha uma acao ao cliclar no icone ou botao
+    // Faz com que o "click" tenha uma ação ao clicar no ícone ou botão
     let parentButton = event.target.closest(".add-to-cart-btn")
 
-    // Se for clicado, adiciona tambem os items: data-name e data-price
+    // Se for clicado, adiciona também os items: data-name e data-price
     if (parentButton){
         const name = parentButton.getAttribute("data-name")
         const price = parseFloat(parentButton.getAttribute("data-price"))
 
-        // Chamando funcao adicionar ao carrinho
+        // Chamando função adicionar ao carrinho
         addToCart(name,price)
     }
 });
 
-// Funcao para adicionar no carrinho
+// Função para adicionar no carrinho
 function addToCart(name, price) {
 
-    // Verificacao contra itens duplicados 
+    // Verificação contra itens duplicados 
 
     // Verifica se dentro da lista exite algum item com o nome igual
     const existingItem = cart.find(item => item.name === name)
@@ -69,7 +69,7 @@ function addToCart(name, price) {
 
         existingItem.quantity += 1;
         
-    // Se nao, continua com o proximo item e suas propriedades 
+    // Se nao, continua com o próximo item e suas propriedades 
     }else{
 
         cart.push({
@@ -79,7 +79,7 @@ function addToCart(name, price) {
         })
     }
 
-    // Chamando a funcao update
+    // Chamando a função update
     updateCartModal();
 
     // Usado para retirar os avisos de WARNING
@@ -90,10 +90,10 @@ function addToCart(name, price) {
     
 };
 
-// Funcao para atualizar o carrinho
+// Função para atualizar o carrinho
 function updateCartModal(){
 
-    // O HTML dentro de cartItemsContainer comeca vazio 
+    // O HTML dentro de cartItemsContainer começa vazio 
     cartItemsContainer.innerHTML = "";
     let total = 0;
 
@@ -103,7 +103,7 @@ function updateCartModal(){
         // Cria-se um novo HTML para cartItemsContainer
         const cartItemElement = document.createElement("div");
 
-        // Estilizacao do novo HTML 
+        // Estilização do novo HTML 
         cartItemElement.classList.add("flex", "justify-between", "mb-4", "flex-col")
 
         // Novo HTML para cartItemsContainer
@@ -122,15 +122,15 @@ function updateCartModal(){
         </div>
     `
 
-    // Variavel de soma para o preco total do carrinho
+    // Variável de soma para o preço total do carrinho
     total += item.price * item.quantity;
 
-    // cartItemsContainer recebe o conteudo de cartItemElement
+    // cartItemsContainer recebe o conteúdo de cartItemElement
     cartItemsContainer.appendChild(cartItemElement)
 
     })
 
-    // Formatacao do valor para moeda R$
+    // Formatação do valor para moeda R$
     cartTotal.textContent = total.toLocaleString("pt-br", {
         style: "currency",
         currency: "BRL"
@@ -148,43 +148,43 @@ cartItemsContainer.addEventListener("click", function(event){
     if(event.target.classList.contains("remove-from-cart-btn")){
         const name = event.target.getAttribute("data-name")
 
-        // Chamando a funcao removeItemCart
+        // Chamando a função removeItemCart
         removeItemCart(name);
     }
 })
 
-// Funcao para remover item do carrinho
+// Função para remover item do carrinho
 function removeItemCart(name){
 
     // Procura os items dentro do index pelo nome
     const index = cart.findIndex(item => item.name === name);
 
-    // Verificacao se o item foi encontado
+    // Verificação se o item foi encontado
 
-    // Se o item for encontrado, ele entra na variavel index
+    // Se o item for encontrado, ele entra na variável index
     if(index !== -1){
         const item = cart[index];
 
-        // Se a quatidade de item for maior que 1, a quantidade e subtraida e o modal e atualizado com a funcao update
+        // Se a quatidade de item for maior que 1, a quantidade e subtraída e o modal e atualizado com a funçâo update
         if(item.quantity > 1){
             item.quantity -= 1;
             updateCartModal();
             return;
         }
 
-        // Remove o item que esta no index com o .splice e atualiza chamando o update 
+        // Remove o item que está no index com o .splice e atualiza chamando o update 
         cart.splice(index, 1); 
         updateCartModal();
     }
 }
 
-// Endereco do cliente
+// Endereço do cliente
 addressIput.addEventListener("input", function(event){
     let inputValue = event.target.value;
 
-    // Verificacao de input preenchido
+    // Verificação de input preenchido
 
-    // Se o input for preenchido, a funcao que indica o input vazio e desativada. Assim a borda vermelha e removida e o hidden esconde o aviso novamente
+    // Se o input for preenchido, a função que indica o input vazio e desativada. Assim a borda vermelha e removida e o hidden esconde o aviso novamente
     if(inputValue !== ""){
         addressIput.classList.remove("border-red-500")
         addressWarn.classList.add("hidden")
@@ -194,10 +194,10 @@ addressIput.addEventListener("input", function(event){
 // Finalizar pedido
 checkoutBtn.addEventListener("click", function(){
 
-    // Verificacao de restaurante aberto
+    // Verificação de restaurante aberto
     const isOpen = checkRestaurantOpen();
 
-    // Se a condicao for diferente de aberto (isOpen), um alerta e emitido e a proxima parte do codigo nao entra em acao
+    // Se a condição for diferente de aberto (isOpen), um alerta e emitido e a próxima parte do código não entra em acao
     if (!isOpen){
         
         // Utiliza o Toastify para o alert
@@ -217,13 +217,13 @@ checkoutBtn.addEventListener("click", function(){
         return;
     }
     
-    // Se o carrinho estiver vazio, a proxima parte do codigo nao entra em acao
+    // Se o carrinho estiver vazio, a próxima parte do código não entra em ação
     if (cart.length === 0){
         cartWarn.classList. remove("hidden")
         return;
     }
 
-    // Se nao houver um valor no input, o hidden que esconde o addressWarn e removido e e adicionado uma borda vermelha ao input
+    // Se não houver um valor no input, o hidden que esconde o addressWarn e removido e é adicionado uma borda vermelha ao input
     if (addressIput.value === ""){
         addressWarn.classList.remove("hidden")
         addressIput.classList.add("border-red-500")
@@ -232,24 +232,24 @@ checkoutBtn.addEventListener("click", function(){
 
     // Envio do pedido pela API
 
-    // Variavel que guarda a soma o total geral comecando com o valor 0
+    // Variável que guarda a soma o total geral começando com o valor 0
     let totalGeral = 0;
 
-    // Mapeia os itens do lista
+    // Mapeia os itens da lista
     const cartItems = cart.map((item) => {
 
         // Soma dos itens
         totalGeral += item.price * item.quantity;
 
-        // Formatacao de como vamos receber o item
+        // Formatação de como vamos receber o item
         return(
         `
         ${item.name}
         Quantidade: (${item.quantity})
-        Preco: R$ ${item.price.toFixed(2)}
+        Preço: R$ ${item.price.toFixed(2)}
         | `)
 
-    // Join junta a foramtacao do array e transforma em uma string    
+    // Join junta a foramtação do array e transforma em uma string    
     }).join("")
 
     // Gera a mensagem codificada pelo "encodeURIComponent"
@@ -258,7 +258,7 @@ checkoutBtn.addEventListener("click", function(){
     // Define o caminho (telefone) para onde a mensagem sera enviada
     const phone = "3788448309"
 
-    // Denomina o caminho da API, com os valores que serao enviados na mensagem
+    // Denomina o caminho da API, com os valores que serão enviados na mensagem
     window.open (`https://wa.me/${phone}?text=${message} Endereco: ${addressIput.value}`, "_blank")
 
     // Garante que ao finalizar o pedido a lista esvazie e atualize o modal
@@ -266,16 +266,16 @@ checkoutBtn.addEventListener("click", function(){
     updateCartModal();
 })
 
-// Verificacao de horario e manipulacao 
+// Verificação de horario e manipulação 
 
-// Funcao que verifica se o clinte esta acessando apos as 18:00 e antes das 22:00 horas
+// Função que verifica se o clinte está acessando após as 18:00 e antes das 22:00 horas
 function checkRestaurantOpen(){
     const data = new Date();
     const hora = data.getHours();
-    return hora >= 18 && hora < 22; // true 
+    return hora >= 13 && hora < 22; // true 
 }
 
-// Verificacao que muda a cor do span
+// Verificação que muda a cor do span
 const spanItem = document.getElementById("date-span")
 const isOpen = checkRestaurantOpen();
 
@@ -284,7 +284,7 @@ if (isOpen){
     spanItem.classList.remove("bg-red-500");
     spanItem.classList.add("bg-green-600");
 
-// Se nao, e removido a cor verde e adicionado a cor vermelha     
+// Se não, é removido a cor verde e adicionado a cor vermelha     
 } else{
     spanItem.classList.remove("bg-green-600");
     spanItem.classList.add("bg-red-500");
