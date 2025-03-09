@@ -272,7 +272,7 @@ checkoutBtn.addEventListener("click", function(){
 function checkRestaurantOpen(){
     const data = new Date();
     const hora = data.getHours();
-    return hora >= 13 && hora < 22; // true 
+    return hora >= 18 && hora < 22; // true 
 }
 
 // Verificação que muda a cor do span
